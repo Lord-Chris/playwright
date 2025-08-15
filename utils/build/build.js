@@ -223,7 +223,7 @@ for (const bundle of bundles) {
 steps.push({
   command: 'node',
   args: [path.resolve(__dirname, '../generate_third_party_notice.js')],
-  shell: true,
+  shell: false,
 });
 
 // Build injected icons.
