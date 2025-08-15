@@ -345,6 +345,7 @@ export abstract class BrowserContext extends SdkObject {
     this._pageBindings.delete(name);
     const frames = this.pages().map(page => page.frames()).flat();
     await Promise.all(frames.map(frame => frame.evaluateExpression(`delete window['${name}']`).catch(e => {})));
+  }
 
   async _removeExposedBindings() {
     for (const [key, binding] of this._pageBindings) {
