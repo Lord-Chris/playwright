@@ -290,8 +290,60 @@ it('should work with busted Array.prototype.map/push', async ({ page, server }) 
   server.setRoute('/test', (req, res) => {
     res.writeHead(200, {
       'content-type': 'text/html',
-    });
-    res.end(`<script>
+});
+
+it('removeBinding should work', async ({ page }) => {
+  let result = null;
+  await page.exposeBinding('add', (source, a, b) => {
+    result = a + b;
+    return result;
+  });
+  await page.setContent('<script>add(5, 6)</script>');
+  expect(result).toBe(11);
+  
+  await page.removeBinding('add');
+  await page.evaluate(() => {
+    try {
+      (window as any).add(1, 2);
+    } catch (e) {
+      (window as any).errorMessage = e.message;
+    }
+  });
+  const errorMessage = await page.evaluate(() => (window as any).errorMessage);
+  expect(errorMessage).toBeTruthy();
+});
+
+it('removeBinding should throw for unregistered binding', async ({ page }) => {
+  let error = null;
+  try {
+    await page.removeBinding('nonexistent');
+  } catch (e) {
+    error = e;
+  }
+  expect(error).toBeTruthy();
+  expect(error.message).toContain('Function "nonexistent" has not been registered');
+});
+
+it('removeBinding should work with exposeBindingHandle', async ({ page }) => {
+  let elementText = null;
+  await page.exposeBinding('clicked', async (source, element) => {
+    elementText = await element.textContent();
+  }, { handle: true });
+  await page.setContent('<div onclick="clicked(this)">Hello</div>');
+  await page.click('div');
+  expect(elementText).toBe('Hello');
+  
+  await page.removeBinding('clicked');
+  await page.evaluate(() => {
+    try {
+      (window as any).clicked(document.querySelector('div'));
+    } catch (e) {
+      (window as any).errorMessage = e.message;
+    }
+  });
+  const errorMessage = await page.evaluate(() => (window as any).errorMessage);
+  expect(errorMessage).toBeTruthy();
+});    res.end(`<script>
       Array.prototype.map = null;
       Array.prototype.push = null;
     </script>`);

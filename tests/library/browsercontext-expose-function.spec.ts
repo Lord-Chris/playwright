@@ -95,3 +95,36 @@ it('should work with CSP', async ({ page, context, server }) => {
   await page.evaluate(() => (window as any).hi());
   expect(called).toBe(true);
 });
+
+it('context removeBinding should work', async ({ context }) => {
+  let result = null;
+  await context.exposeBinding('add', (source, a, b) => {
+    result = a + b;
+    return result;
+  });
+  const page = await context.newPage();
+  await page.setContent('<script>add(5, 6)</script>');
+  expect(result).toBe(11);
+  
+  await context.removeBinding('add');
+  await page.evaluate(() => {
+    try {
+      (window as any).add(1, 2);
+    } catch (e) {
+      (window as any).errorMessage = e.message;
+    }
+  });
+  const errorMessage = await page.evaluate(() => (window as any).errorMessage);
+  expect(errorMessage).toBeTruthy();
+});
+
+it('context removeBinding should throw for unregistered binding', async ({ context }) => {
+  let error = null;
+  try {
+    await context.removeBinding('nonexistent');
+  } catch (e) {
+    error = e;
+  }
+  expect(error).toBeTruthy();
+  expect(error.message).toContain('Function "nonexistent" has not been registered');
+});

@@ -221,6 +221,10 @@ export class BrowserContextDispatcher extends Dispatcher<BrowserContext, channel
     });
   }
 
+  async removeBinding(params: channels.BrowserContextRemoveBindingParams): Promise<void> {
+    await this._context.removeBinding(params.name);
+  }
+
   async newPage(params: channels.BrowserContextNewPageParams, metadata: CallMetadata): Promise<channels.BrowserContextNewPageResult> {
     return { page: PageDispatcher.from(this, await this._context.newPage(metadata)) };
   }

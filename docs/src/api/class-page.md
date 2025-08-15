@@ -1836,6 +1836,24 @@ Callback function that will be called in the Playwright's context.
 Whether to pass the argument as a handle, instead of passing by value. When passing a handle, only one argument is
 supported. When passing by value, multiple arguments are supported.
 
+## async method: Page.removeBinding
+* since: v1.43
+
+The method removes a function from the `window` object of every frame in this page that was previously exposed via
+[`method: Page.exposeBinding`].
+
+**Usage**
+
+```js
+await page.exposeBinding('helper', () => 'help');
+await page.removeBinding('helper');
+```
+
+### param: Page.removeBinding.name
+- `name` <[string]>
+
+Name of the function on the window object.
+
 ## async method: Page.exposeFunction
 * since: v1.8
 

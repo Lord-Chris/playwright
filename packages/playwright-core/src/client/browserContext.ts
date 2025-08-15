@@ -332,6 +332,11 @@ export class BrowserContext extends ChannelOwner<channels.BrowserContextChannel>
     this._bindings.set(name, callback);
   }
 
+  async removeBinding(name: string): Promise<void> {
+    await this._channel.removeBinding({ name });
+    this._bindings.delete(name);
+  }
+
   async exposeFunction(name: string, callback: Function): Promise<void> {
     await this._channel.exposeBinding({ name });
     const binding = (source: structs.BindingSource, ...args: any[]) => callback(...args);

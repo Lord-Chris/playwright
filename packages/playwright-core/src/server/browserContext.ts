@@ -338,6 +338,14 @@ export abstract class BrowserContext extends SdkObject {
     await Promise.all(frames.map(frame => frame.evaluateExpression(binding.initScript.source).catch(e => {})));
   }
 
+  async removeBinding(name: string): Promise<void> {
+    const binding = this._pageBindings.get(name);
+    if (!binding)
+      throw new Error(`Function "${name}" has not been registered`);
+    this._pageBindings.delete(name);
+    const frames = this.pages().map(page => page.frames()).flat();
+    await Promise.all(frames.map(frame => frame.evaluateExpression(`delete window['${name}']`).catch(e => {})));
+
   async _removeExposedBindings() {
     for (const [key, binding] of this._pageBindings) {
       if (!binding.internal)

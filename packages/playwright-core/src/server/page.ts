@@ -356,6 +356,14 @@ export class Page extends SdkObject {
     await Promise.all(this.frames().map(frame => frame.evaluateExpression(binding.initScript.source).catch(e => {})));
   }
 
+  async removeBinding(name: string) {
+    const binding = this._pageBindings.get(name);
+    if (!binding)
+      throw new Error(`Function "${name}" has not been registered`);
+    this._pageBindings.delete(name);
+    await Promise.all(this.frames().map(frame => frame.evaluateExpression(`delete window['${name}']`).catch(e => {})));
+  }
+
   async _removeExposedBindings() {
     for (const [key, binding] of this._pageBindings) {
       if (!binding.internal)

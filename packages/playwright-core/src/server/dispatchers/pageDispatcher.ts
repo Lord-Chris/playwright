@@ -125,6 +125,10 @@ export class PageDispatcher extends Dispatcher<Page, channels.PageChannel, Brows
     });
   }
 
+  async removeBinding(params: channels.PageRemoveBindingParams): Promise<void> {
+    await this._page.removeBinding(params.name);
+  }
+
   async setExtraHTTPHeaders(params: channels.PageSetExtraHTTPHeadersParams, metadata: CallMetadata): Promise<void> {
     await this._page.setExtraHTTPHeaders(params.headers);
   }

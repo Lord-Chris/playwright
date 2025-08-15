@@ -62,6 +62,8 @@ export interface Page {
   exposeBinding(name: string, playwrightBinding: (source: BindingSource, arg: JSHandle) => any, options: { handle: true }): Promise<void>;
   exposeBinding(name: string, playwrightBinding: (source: BindingSource, ...args: any[]) => any, options?: { handle?: boolean }): Promise<void>;
 
+  removeBinding(name: string): Promise<void>;
+
   removeAllListeners(type?: string): this;
   removeAllListeners(type: string | undefined, options: {
     /**
@@ -109,6 +111,8 @@ export interface Frame {
 export interface BrowserContext {
   exposeBinding(name: string, playwrightBinding: (source: BindingSource, arg: JSHandle) => any, options: { handle: true }): Promise<void>;
   exposeBinding(name: string, playwrightBinding: (source: BindingSource, ...args: any[]) => any, options?: { handle?: boolean }): Promise<void>;
+
+  removeBinding(name: string): Promise<void>;
 
   addInitScript<Arg>(script: PageFunction<Arg, any> | { path?: string, content?: string }, arg?: Arg): Promise<void>;
 

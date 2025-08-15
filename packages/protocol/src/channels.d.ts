@@ -1579,6 +1579,7 @@ export interface BrowserContextChannel extends BrowserContextEventTarget, EventT
   close(params: BrowserContextCloseParams, metadata?: CallMetadata): Promise<BrowserContextCloseResult>;
   cookies(params: BrowserContextCookiesParams, metadata?: CallMetadata): Promise<BrowserContextCookiesResult>;
   exposeBinding(params: BrowserContextExposeBindingParams, metadata?: CallMetadata): Promise<BrowserContextExposeBindingResult>;
+  removeBinding(params: BrowserContextRemoveBindingParams, metadata?: CallMetadata): Promise<BrowserContextRemoveBindingResult>;
   grantPermissions(params: BrowserContextGrantPermissionsParams, metadata?: CallMetadata): Promise<BrowserContextGrantPermissionsResult>;
   newPage(params?: BrowserContextNewPageParams, metadata?: CallMetadata): Promise<BrowserContextNewPageResult>;
   setDefaultNavigationTimeoutNoReply(params: BrowserContextSetDefaultNavigationTimeoutNoReplyParams, metadata?: CallMetadata): Promise<BrowserContextSetDefaultNavigationTimeoutNoReplyResult>;
@@ -1729,6 +1730,12 @@ export type BrowserContextExposeBindingOptions = {
   needsHandle?: boolean,
 };
 export type BrowserContextExposeBindingResult = void;
+export type BrowserContextRemoveBindingParams = {
+  name: string,
+};
+export type BrowserContextRemoveBindingOptions = {
+};
+export type BrowserContextRemoveBindingResult = void;
 export type BrowserContextGrantPermissionsParams = {
   permissions: string[],
   origin?: string,
@@ -2023,6 +2030,7 @@ export interface PageChannel extends PageEventTarget, EventTargetChannel {
   close(params: PageCloseParams, metadata?: CallMetadata): Promise<PageCloseResult>;
   emulateMedia(params: PageEmulateMediaParams, metadata?: CallMetadata): Promise<PageEmulateMediaResult>;
   exposeBinding(params: PageExposeBindingParams, metadata?: CallMetadata): Promise<PageExposeBindingResult>;
+  removeBinding(params: PageRemoveBindingParams, metadata?: CallMetadata): Promise<PageRemoveBindingResult>;
   goBack(params: PageGoBackParams, metadata?: CallMetadata): Promise<PageGoBackResult>;
   goForward(params: PageGoForwardParams, metadata?: CallMetadata): Promise<PageGoForwardResult>;
   requestGC(params?: PageRequestGCParams, metadata?: CallMetadata): Promise<PageRequestGCResult>;
@@ -2147,6 +2155,10 @@ export type PageExposeBindingOptions = {
   needsHandle?: boolean,
 };
 export type PageExposeBindingResult = void;
+export type PageRemoveBindingParams = {
+  name: string,
+};
+export type PageRemoveBindingResult = void;
 export type PageGoBackParams = {
   timeout?: number,
   waitUntil?: LifecycleEvent,

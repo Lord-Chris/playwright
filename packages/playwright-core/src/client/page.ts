@@ -355,6 +355,11 @@ export class Page extends ChannelOwner<channels.PageChannel> implements api.Page
     this._bindings.set(name, callback);
   }
 
+  async removeBinding(name: string) {
+    await this._channel.removeBinding({ name });
+    this._bindings.delete(name);
+  }
+
   async setExtraHTTPHeaders(headers: Headers) {
     validateHeaders(headers);
     await this._channel.setExtraHTTPHeaders({ headers: headersObjectToArray(headers) });
