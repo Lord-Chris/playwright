@@ -1195,6 +1195,10 @@ BrowserContext:
         name: string
         needsHandle: boolean?
 
+    removeBinding:
+      parameters:
+        name: string
+
     grantPermissions:
       parameters:
         permissions:
@@ -1522,6 +1526,10 @@ Page:
       parameters:
         name: string
         needsHandle: boolean?
+
+    removeBinding:
+      parameters:
+        name: string
 
     goBack:
       parameters:

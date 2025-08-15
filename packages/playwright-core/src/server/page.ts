@@ -342,6 +342,8 @@ export class Page extends SdkObject {
   }
 
   setDefaultTimeout(timeout: number | undefined) {
+    
+    
     this._timeoutSettings.setDefaultTimeout(timeout);
   }
 

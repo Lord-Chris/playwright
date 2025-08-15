@@ -1734,6 +1734,7 @@ export type BrowserContextRemoveBindingParams = {
   name: string,
 };
 export type BrowserContextRemoveBindingOptions = {
+
 };
 export type BrowserContextRemoveBindingResult = void;
 export type BrowserContextGrantPermissionsParams = {
@@ -2157,6 +2158,9 @@ export type PageExposeBindingOptions = {
 export type PageExposeBindingResult = void;
 export type PageRemoveBindingParams = {
   name: string,
+};
+export type PageRemoveBindingOptions = {
+
 };
 export type PageRemoveBindingResult = void;
 export type PageGoBackParams = {

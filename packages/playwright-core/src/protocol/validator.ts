@@ -951,6 +951,10 @@ scheme.BrowserContextExposeBindingParams = tObject({
   needsHandle: tOptional(tBoolean),
 });
 scheme.BrowserContextExposeBindingResult = tOptional(tObject({}));
+scheme.BrowserContextRemoveBindingParams = tObject({
+  name: tString,
+});
+scheme.BrowserContextRemoveBindingResult = tOptional(tObject({}));
 scheme.BrowserContextGrantPermissionsParams = tObject({
   permissions: tArray(tString),
   origin: tOptional(tString),
@@ -1176,6 +1180,10 @@ scheme.PageExposeBindingParams = tObject({
   needsHandle: tOptional(tBoolean),
 });
 scheme.PageExposeBindingResult = tOptional(tObject({}));
+scheme.PageRemoveBindingParams = tObject({
+  name: tString,
+});
+scheme.PageRemoveBindingResult = tOptional(tObject({}));
 scheme.PageGoBackParams = tObject({
   timeout: tOptional(tNumber),
   waitUntil: tOptional(tType('LifecycleEvent')),
