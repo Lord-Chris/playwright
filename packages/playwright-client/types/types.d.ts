@@ -964,6 +964,21 @@ export interface Page {
   exposeBinding(name: string, playwrightBinding: (source: BindingSource, ...args: any[]) => any, options?: { handle?: boolean }): Promise<void>;
 
   /**
+   * The method removes a function from the `window` object of every frame in this page that was previously exposed via
+   * [page.exposeBinding(name, callback[, options])](https://playwright.dev/docs/api/class-page#page-expose-binding).
+   *
+   * **Usage**
+   *
+   * ```js
+   * await page.exposeBinding('helper', () => 'help');
+   * await page.removeBinding('helper');
+   * ```
+   *
+   * @param name Name of the function on the window object.
+   */
+  removeBinding(name: string): Promise<void>;
+
+  /**
    * Removes all the listeners of the given type (or all registered listeners if no type given). Allows to wait for
    * async listeners to complete or to ignore subsequent errors from these listeners.
    *
@@ -8120,6 +8135,21 @@ export interface BrowserContext {
    * @param options
    */
   exposeBinding(name: string, playwrightBinding: (source: BindingSource, ...args: any[]) => any, options?: { handle?: boolean }): Promise<void>;
+
+  /**
+   * The method removes a function from the `window` object of every frame in every page in the context that was
+   * previously exposed via [browserContext.exposeBinding(name, callback[, options])](https://playwright.dev/docs/api/class-browsercontext#browser-context-expose-binding).
+   *
+   * **Usage**
+   *
+   * ```js
+   * await context.exposeBinding('helper', () => 'help');
+   * await context.removeBinding('helper');
+   * ```
+   *
+   * @param name Name of the function on the window object.
+   */
+  removeBinding(name: string): Promise<void>;
 
   /**
    * Adds a script which would be evaluated in one of the following scenarios:
