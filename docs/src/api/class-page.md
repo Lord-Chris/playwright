@@ -1850,6 +1850,7 @@ await page.removeBinding('helper');
 ```
 
 ### param: Page.removeBinding.name
+* since: v1.43
 - `name` <[string]>
 
 Name of the function on the window object.

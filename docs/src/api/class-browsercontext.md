@@ -777,6 +777,7 @@ await context.removeBinding('helper');
 ```
 
 ### param: BrowserContext.removeBinding.name
+* since: v1.43
 - `name` <[string]>
 
 Name of the function on the window object.
